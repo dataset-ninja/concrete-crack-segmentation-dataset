@@ -5,6 +5,7 @@ import supervisely as sly
 from dotenv import load_dotenv
 
 import dataset_tools as dtools
+from src.convert import convert_and_upload_supervisely_project
 
 
 if sly.is_development():
@@ -14,10 +15,16 @@ if sly.is_development():
 os.makedirs("./stats/", exist_ok=True)
 os.makedirs("./visualizations/", exist_ok=True)
 api = sly.Api.from_env()
+workspace_id = sly.env.workspace_id()
+
+if api.project.get_info_by_name(workspace_id, "Cracks and Potholes in Road") is None:
+    project_id = convert_and_upload_supervisely_project(api, workspace_id)
+else:
+    project_id = sly.env.project_id()
 
 
 # 1a initialize sly api way
-project_id = sly.env.project_id()
+# project_id = sly.env.project_id()
 project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 datasets = api.dataset.get_list(project_id)
 
@@ -50,7 +57,7 @@ if len(custom_data) >= 0:
         "release_year": 2022,
         "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
         "license": "CC BY-SA 4.0",
-        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode/",
         "preview_image_id": 49551,
         "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
         "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
@@ -73,7 +80,7 @@ def build_stats():
         dtools.ClassBalance(project_meta),
         # dtools.ClassCooccurrence(project_meta, force=False),
         dtools.ClassesPerImage(project_meta, datasets),
-        # dtools.ObjectsDistribution(project_meta),
+        dtools.ObjectsDistribution(project_meta),
         dtools.ObjectSizes(project_meta),
         dtools.ClassSizes(project_meta),
     ]
