@@ -58,7 +58,7 @@ if len(custom_data) >= 0:
         "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
         "license": "CC BY-SA 4.0",
         "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode/",
-        "preview_image_id": 49551,
+        "preview_image_id": 185895,
         "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
         "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
         "download_sly_url": download_sly_url,
