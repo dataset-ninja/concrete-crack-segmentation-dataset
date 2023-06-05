@@ -8,9 +8,8 @@ import dataset_tools as dtools
 
 
 if sly.is_development():
-    # load_dotenv(os.path.expanduser("~/ninja.env"))
+    load_dotenv(os.path.expanduser("~/ninja.env"))
     load_dotenv("local.env")
-    load_dotenv(os.path.expanduser("~/supervisely.env"))
 
 os.makedirs("./stats/", exist_ok=True)
 os.makedirs("./visualizations/", exist_ok=True)
@@ -39,32 +38,32 @@ dtools.update_sly_url_dict({project_id: download_sly_url})
 
 
 # 3. upload custom data
+if len(custom_data) >= 0:
+    # preset fields
+    custom_data = {
+        # required fields
+        "name": "Concrete Crack Segmentation Dataset",
+        "fullname": "Concrete Crack Segmentation Dataset",
+        "cv_tasks": ["semantic segmentation"],
+        "annotation_types": ["semantic segmentation"],
+        "industries": ["general domain"],
+        "release_year": 2022,
+        "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "preview_image_id": 49551,
+        "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
+        "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
+        "download_sly_url": download_sly_url,
 
-# preset fields
-custom_data = {
-    # required fields
-    "name": "Concrete Crack Segmentation Dataset",
-    "fullname": "Concrete Crack Segmentation Dataset",
-    "cv_tasks": ["semantic segmentation", "object detection", "instance segmentation"],
-    "annotation_types": ["instance segmentation"],
-    "industries": ["general domain"],
-    "release_year": 2012,
-    "homepage_url": "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html",
-    "license": "custom",
-    "license_url": "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html#rights",
-    "preview_image_id": 49551,
-    "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
-    "citation_url": "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html#citation",
-    "download_sly_url": download_sly_url,
-
-    # optional fields
-    "download_original_url": "http://host.robots.ox.ac.uk/pascal/VOC/voc2012/index.html#devkit",  
-    "paper": "http://host.robots.ox.ac.uk/pascal/VOC/pubs/everingham15.pdf",
-    # "organization_name": None, 
-    # "organization_url": None,
-    # "tags": [],
-}
-api.project.update_custom_data(project_id, custom_data)
+        # optional fields
+        "download_original_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1",
+        # "paper": None,
+        # "organization_name": None, 
+        # "organization_url": None,
+        # "tags": [],
+    }
+    api.project.update_custom_data(project_id, custom_data)
 
 
 
@@ -72,9 +71,9 @@ api.project.update_custom_data(project_id, custom_data)
 def build_stats():
     stats = [
         dtools.ClassBalance(project_meta),
-        dtools.ClassCooccurrence(project_meta, force=False),
+        # dtools.ClassCooccurrence(project_meta, force=False),
         dtools.ClassesPerImage(project_meta, datasets),
-        dtools.ObjectsDistribution(project_meta),
+        # dtools.ObjectsDistribution(project_meta),
         dtools.ObjectSizes(project_meta),
         dtools.ClassSizes(project_meta),
     ]
@@ -164,7 +163,7 @@ def build_summary():
     print('Done.')
 
 def main():
-    # pass
+    pass
     build_stats()
     build_visualizations()
     build_summary()
