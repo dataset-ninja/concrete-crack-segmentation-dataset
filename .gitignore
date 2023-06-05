@@ -1,0 +1,8 @@
+.DS_Store
+__pycache__
+.venv/
+dataset_tools/
+dataset_tools
+supervisely
+data/
+debug_data/
