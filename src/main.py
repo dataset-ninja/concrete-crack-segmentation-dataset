@@ -70,6 +70,7 @@ if len(custom_data) >= 0:
         # "organization_name": None, 
         # "organization_url": None,
         # "tags": [],
+        "github": "dataset-ninja/concrete-crack-segmentation-dataset",
     }
     api.project.update_custom_data(project_id, custom_data)
 
