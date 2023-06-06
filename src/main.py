@@ -15,6 +15,7 @@ if sly.is_development():
 os.makedirs("./stats/", exist_ok=True)
 os.makedirs("./visualizations/", exist_ok=True)
 api = sly.Api.from_env()
+team_id = sly.env.team_id()
 workspace_id = sly.env.workspace_id()
 
 if api.project.get_info_by_name(workspace_id, "Cracks and Potholes in Road") is None:
@@ -73,12 +74,13 @@ if len(custom_data) >= 0:
     api.project.update_custom_data(project_id, custom_data)
 
 
-
+project_info = api.project.get_info_by_id(project_id)
+custom_data = project_info.custom_data
 
 def build_stats():
     stats = [
         dtools.ClassBalance(project_meta),
-        # dtools.ClassCooccurrence(project_meta, force=False),
+        dtools.ClassCooccurrence(project_meta, force=False),
         dtools.ClassesPerImage(project_meta, datasets),
         dtools.ObjectsDistribution(project_meta),
         dtools.ObjectSizes(project_meta),
@@ -86,6 +88,7 @@ def build_stats():
     ]
     heatmaps = dtools.ClassesHeatmaps(project_meta)
     classes_previews = dtools.ClassesPreview(project_meta, project_info.name, force=False)
+    previews = dtools.Previews(project_id, project_meta, api, team_id)
 
     for stat in stats:
         if not sly.fs.file_exists(f"./stats/{stat.basename_stem}.json"):
@@ -96,7 +99,9 @@ def build_stats():
         heatmaps.force = True
     if not sly.fs.file_exists(f"./visualizations/{classes_previews.basename_stem}.webm"):
         classes_previews.force = True
-    vstats = [stat for stat in [heatmaps, classes_previews] if stat.force]
+    if not api.file.dir_exists(team_id, f"/dataset/{project_id}/renders/"):
+        previews.force = True
+    vstats = [stat for stat in [heatmaps, classes_previews, previews] if stat.force]
 
     dtools.count_stats(
         project_id,
@@ -115,6 +120,8 @@ def build_stats():
             heatmaps.to_image(f"./stats/{heatmaps.basename_stem}.png", draw_style="outside_black")
         if classes_previews.force:
             classes_previews.animate(f"./visualizations/{classes_previews.basename_stem}.webm")
+        if previews.force:
+            previews.close()
 
     print("Stats done")
 
