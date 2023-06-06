@@ -20,11 +20,11 @@ def convert_and_upload_supervisely_project(api, workspace_id):
     obj_class = sly.ObjClass("crack", sly.Bitmap)
     obj_class_collection = sly.ObjClassCollection([obj_class])
 
-    project = api.project.create(workspace_id, project_name)
+    project_info = api.project.create(workspace_id, project_name)
     meta = sly.ProjectMeta(obj_classes=obj_class_collection)
-    api.project.update_meta(project.id, meta.to_json())
+    api.project.update_meta(project_info.id, meta.to_json())
 
-    dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
+    dataset = api.dataset.create(project_info.id, ds_name, change_name_if_conflict=True)
 
     images_pathes = os.path.join(dataset_path, "rgb")
     masks_pathes = os.path.join(dataset_path, "BW")
@@ -67,4 +67,4 @@ def convert_and_upload_supervisely_project(api, workspace_id):
 
         progress.update(len(img_names_batch))
 
-    return project.id
+    return project_info

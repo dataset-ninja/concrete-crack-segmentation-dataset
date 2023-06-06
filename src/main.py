@@ -18,14 +18,13 @@ api = sly.Api.from_env()
 team_id = sly.env.team_id()
 workspace_id = sly.env.workspace_id()
 
-if api.project.get_info_by_name(workspace_id, "Cracks and Potholes in Road") is None:
-    project_id = convert_and_upload_supervisely_project(api, workspace_id)
-else:
-    project_id = sly.env.project_id()
+project_info = api.project.get_info_by_name(workspace_id, "Cracks and Potholes in Road")
+if project_info is None:
+    project_info = convert_and_upload_supervisely_project(api, workspace_id)
 
 
 # 1a initialize sly api way
-# project_id = sly.env.project_id()
+project_id = project_info.id
 project_meta = sly.ProjectMeta.from_json(api.project.get_meta(project_id))
 datasets = api.dataset.get_list(project_id)
 
