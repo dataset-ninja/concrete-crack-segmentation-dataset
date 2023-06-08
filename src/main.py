@@ -91,14 +91,14 @@ custom_data = project_info.custom_data
 def build_stats():
     stats = [
         dtools.ClassBalance(project_meta),
-        dtools.ClassCooccurrence(project_meta, force=False),
+        dtools.ClassCooccurrence(project_meta),
         dtools.ClassesPerImage(project_meta, datasets),
         dtools.ObjectsDistribution(project_meta),
         dtools.ObjectSizes(project_meta),
         dtools.ClassSizes(project_meta),
     ]
     heatmaps = dtools.ClassesHeatmaps(project_meta)
-    classes_previews = dtools.ClassesPreview(project_meta, project_info.name, force=False)
+    classes_previews = dtools.ClassesPreview(project_meta, project_info.name)
     previews = dtools.Previews(project_id, project_meta, api, team_id)
 
     for stat in stats:
@@ -141,12 +141,12 @@ def build_stats():
 
 def build_visualizations():
     renderers = [
-        dtools.Poster(project_id, project_meta, force=False),
+        dtools.Poster(project_id, project_meta),
         dtools.SideAnnotationsGrid(project_id, project_meta, rows=2),
     ]
     animators = [
         dtools.HorizontalGrid(project_id, project_meta, rows=2),
-        dtools.VerticalGrid(project_id, project_meta, force=False),
+        dtools.VerticalGrid(project_id, project_meta),
     ]
 
     for vis in renderers + animators:
