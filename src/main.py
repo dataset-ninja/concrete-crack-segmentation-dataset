@@ -39,42 +39,42 @@ project_info = api.project.get_info_by_id(project_id)
 custom_data = project_info.custom_data
 
 # 2. get download link
-# download_sly_url = dtools.prepare_download_link(project_info)
-# dtools.update_sly_url_dict({project_id: download_sly_url})
+download_sly_url = dtools.prepare_download_link(project_info)
+dtools.update_sly_url_dict({project_id: download_sly_url})
 
 
-# # 3. upload custom data
-# if len(custom_data) >= 0:
-#     # preset fields
-#     custom_data = {
-#         # required fields
-#         "name": "Concrete Crack Segmentation Dataset",
-#         "fullname": "Concrete Crack Segmentation Dataset",
-#         "cv_tasks": ["semantic segmentation"],
-#         "annotation_types": ["semantic segmentation"],
-#         "industries": ["general domain"],
-#         "release_year": 2022,
-#         "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
-#         "license": "CC BY-SA 4.0",
-#         "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode/",
-#         "preview_image_id": 185895,
-#         "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
-#         "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
-#         "download_sly_url": download_sly_url,
+# 3. upload custom data
+if len(custom_data) >= 0:
+    # preset fields
+    custom_data = {
+        # required fields
+        "name": "Concrete Crack Segmentation Dataset",
+        "fullname": "Concrete Crack Segmentation Dataset",
+        "cv_tasks": ["semantic segmentation"],
+        "annotation_types": ["semantic segmentation"],
+        "industries": ["general domain"],
+        "release_year": 2022,
+        "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
+        "license": "CC BY-SA 4.0",
+        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode/",
+        "preview_image_id": 185895,
+        "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
+        "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
+        "download_sly_url": download_sly_url,
 
-#         # optional fields
-#         "download_original_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1",
-#         # "paper": None,
-#         # "organization_name": None,
-#         # "organization_url": None,
-#         # "tags": [],
-#         "github": "dataset-ninja/concrete-crack-segmentation-dataset",
-#     }
-#     api.project.update_custom_data(project_id, custom_data)
+        # optional fields
+        "download_original_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1",
+        # "paper": None,
+        # "organization_name": None,
+        # "organization_url": None,
+        # "tags": [],
+        "github": "dataset-ninja/concrete-crack-segmentation-dataset",
+    }
+    api.project.update_custom_data(project_id, custom_data)
 
 
-# project_info = api.project.get_info_by_id(project_id)
-# custom_data = project_info.custom_data
+project_info = api.project.get_info_by_id(project_id)
+custom_data = project_info.custom_data
 
 
 def build_stats():
