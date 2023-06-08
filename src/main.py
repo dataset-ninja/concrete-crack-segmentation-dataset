@@ -1,12 +1,11 @@
 import json
 import os
 
-import supervisely as sly
 from dotenv import load_dotenv
 
 import dataset_tools as dtools
+import supervisely as sly
 from src.convert import convert_and_upload_supervisely_project
-
 
 if sly.is_development():
     load_dotenv(os.path.expanduser("~/ninja.env"))
@@ -18,7 +17,7 @@ api = sly.Api.from_env()
 team_id = sly.env.team_id()
 workspace_id = sly.env.workspace_id()
 
-project_info = api.project.get_info_by_name(workspace_id, "Cracks and Potholes in Road")
+project_info = api.project.get_info_by_name(workspace_id, "Concrete crack")
 if project_info is None:
     project_info = convert_and_upload_supervisely_project(api, workspace_id)
 
@@ -40,42 +39,43 @@ project_info = api.project.get_info_by_id(project_id)
 custom_data = project_info.custom_data
 
 # 2. get download link
-download_sly_url = dtools.prepare_download_link(project_info)
-dtools.update_sly_url_dict({project_id: download_sly_url})
+# download_sly_url = dtools.prepare_download_link(project_info)
+# dtools.update_sly_url_dict({project_id: download_sly_url})
 
 
-# 3. upload custom data
-if len(custom_data) >= 0:
-    # preset fields
-    custom_data = {
-        # required fields
-        "name": "Concrete Crack Segmentation Dataset",
-        "fullname": "Concrete Crack Segmentation Dataset",
-        "cv_tasks": ["semantic segmentation"],
-        "annotation_types": ["semantic segmentation"],
-        "industries": ["general domain"],
-        "release_year": 2022,
-        "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
-        "license": "CC BY-SA 4.0",
-        "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode/",
-        "preview_image_id": 185895,
-        "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
-        "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
-        "download_sly_url": download_sly_url,
+# # 3. upload custom data
+# if len(custom_data) >= 0:
+#     # preset fields
+#     custom_data = {
+#         # required fields
+#         "name": "Concrete Crack Segmentation Dataset",
+#         "fullname": "Concrete Crack Segmentation Dataset",
+#         "cv_tasks": ["semantic segmentation"],
+#         "annotation_types": ["semantic segmentation"],
+#         "industries": ["general domain"],
+#         "release_year": 2022,
+#         "homepage_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
+#         "license": "CC BY-SA 4.0",
+#         "license_url": "https://creativecommons.org/licenses/by-sa/4.0/legalcode/",
+#         "preview_image_id": 185895,
+#         "github_url": "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset",
+#         "citation_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset",
+#         "download_sly_url": download_sly_url,
 
-        # optional fields
-        "download_original_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1",
-        # "paper": None,
-        # "organization_name": None, 
-        # "organization_url": None,
-        # "tags": [],
-        "github": "dataset-ninja/concrete-crack-segmentation-dataset",
-    }
-    api.project.update_custom_data(project_id, custom_data)
+#         # optional fields
+#         "download_original_url": "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1",
+#         # "paper": None,
+#         # "organization_name": None,
+#         # "organization_url": None,
+#         # "tags": [],
+#         "github": "dataset-ninja/concrete-crack-segmentation-dataset",
+#     }
+#     api.project.update_custom_data(project_id, custom_data)
 
 
-project_info = api.project.get_info_by_id(project_id)
-custom_data = project_info.custom_data
+# project_info = api.project.get_info_by_id(project_id)
+# custom_data = project_info.custom_data
+
 
 def build_stats():
     stats = [
@@ -117,7 +117,9 @@ def build_stats():
 
     if len(vstats) > 0:
         if heatmaps.force:
-            heatmaps.to_image(f"./stats/{heatmaps.basename_stem}.png")
+            heatmaps.to_image(
+                f"./stats/{heatmaps.basename_stem}.png", output_width=500, outer_grid_spacing=40
+            )
         if classes_previews.force:
             classes_previews.animate(f"./visualizations/{classes_previews.basename_stem}.webm")
         if previews.force:
@@ -129,10 +131,10 @@ def build_stats():
 def build_visualizations():
     renderers = [
         dtools.Poster(project_id, project_meta, force=False),
-        dtools.SideAnnotationsGrid(project_id, project_meta),
+        dtools.SideAnnotationsGrid(project_id, project_meta, rows=2),
     ]
     animators = [
-        dtools.HorizontalGrid(project_id, project_meta),
+        dtools.HorizontalGrid(project_id, project_meta, rows=2),
         dtools.VerticalGrid(project_id, project_meta, force=False),
     ]
 
@@ -159,28 +161,43 @@ def build_visualizations():
         a.animate(f"./visualizations/{a.basename_stem}.webm")
     print("Visualizations done")
 
+
 def build_summary():
-    print('Building summary...')
+    print("Building summary...")
     summary_data = dtools.get_summary_data_sly(project_info)
 
-    classes_preview = None
-    if sly.fs.file_exists("./visualizations/classes_preview.webm"):
-        classes_preview=f"{custom_data['github_url']}/raw/main/visualizations/classes_preview.webm"
+    summary_content = dtools.generate_summary_content(summary_data)
 
-    summary_content = dtools.generate_summary_content(
-        summary_data,
-        vis_url=classes_preview,
-    )
+    vis_url = f"{custom_data['github_url']}/raw/main/visualizations/horizontal_grid.png"
+    summary_content += f"\n\nHere is the visualized example grid with annotations:\n\n"
+    summary_content += f'<img src="{vis_url}">\n'
 
     with open("SUMMARY.md", "w") as summary_file:
         summary_file.write(summary_content)
-    print('Done.')
+    print("Done.")
+
+
+def build_license():
+    print("Building license...")
+    ds_name = custom_data["name"]
+    license_url = custom_data["license_url"]
+    license = custom_data["license"]
+    homepage = custom_data["homepage_url"]
+    license_content = f"The {ds_name} data is under [{license}]({license_url}) license."
+    license_content += f"\n\n[🔗 Source]({homepage})\n\n"
+
+    with open("LICENSE.md", "w") as license_file:
+        license_file.write(license_content)
+
+    print("Done.")
+
 
 def main():
     pass
     build_stats()
     build_visualizations()
     build_summary()
+    build_license()
 
 
 if __name__ == "__main__":
