@@ -9,15 +9,13 @@ import supervisely as sly
 from supervisely.io.fs import get_file_name
 
 
-
 def convert_and_upload_supervisely_project(api, workspace_id):
-
     project_name = "Concrete crack"
     dataset_path = "/private/tmp/sly_data_dir/concreteCrackSegmentationDataset"
     ds_name = "ds"
     batch_size = 3  # 4032x3024 images shapes...
 
-    obj_class = sly.ObjClass("crack", sly.Bitmap)
+    obj_class = sly.ObjClass("crack", sly.Bitmap, color=[208, 2, 27])
     obj_class_collection = sly.ObjClassCollection([obj_class])
 
     project_info = api.project.create(workspace_id, project_name)
