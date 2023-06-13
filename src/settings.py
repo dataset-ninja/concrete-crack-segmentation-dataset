@@ -21,7 +21,7 @@ HOMEPAGE_URL: str = "https://www.kaggle.com/datasets/motono0223/concrete-crack-s
 
 PREVIEW_IMAGE_ID: int = 185895
 
-GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-"
+GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset"
 
 ##################################
 ### * Optional after uploading ###
