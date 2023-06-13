@@ -19,7 +19,7 @@ ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.SemanticSegmentation()]
 RELEASE_YEAR: int = 2022
 HOMEPAGE_URL: str = "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset"
 
-PREVIEW_IMAGE_ID: int = 350405
+PREVIEW_IMAGE_ID: int = 185895
 
 GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-"
 
