@@ -71,4 +71,3 @@ if __name__ == "__main__":
     project_repo.build_texts(force=force_texts, preview_class="HorizontalGrid")
 
     sly.logger.info("Script finished.")
-
