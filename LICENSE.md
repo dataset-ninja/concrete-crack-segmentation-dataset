@@ -1,4 +1,1 @@
-The Concrete crack data is under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode/) license.
-
-[🔗 Source](https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset)
-
+Concrete crack Segmentation Dataset is under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/legalcode) license.
