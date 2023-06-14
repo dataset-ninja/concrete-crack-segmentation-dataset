@@ -61,7 +61,7 @@ HEATMAP_ROWS: int = None
 HEATMAP_COLS: int = None
 HEATMAP_GRID_SPACING: int = 10
 HEATMAP_OUTER_GRID_SPACING: int = 10
-HEATMAP_OUTPUT_WIDTH: int = 400
+HEATMAP_OUTPUT_WIDTH: int = None
 ###############################################################
 
 
