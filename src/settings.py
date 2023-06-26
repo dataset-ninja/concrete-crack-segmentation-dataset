@@ -13,13 +13,13 @@ PROJECT_NAME_FULL = "Concrete crack Segmentation Dataset"
 ##################################
 LICENSE: License = License.CC_BY_SA_4_0()
 INDUSTRIES: List[Industry] = [Industry.Industrial()]
-CV_TASKS: List[CVTask] = [CVTask.SemanticSegmentation()]
-ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.SemanticSegmentation()]
+CV_TASKS: List[CVTask] = [CVTask.SemanticSegmentation(), CVTask.InstanceSegmentation()]
+ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.InstanceSegmentation()]
 
 RELEASE_YEAR: int = 2022
 HOMEPAGE_URL: str = "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset"
 
-PREVIEW_IMAGE_ID: int = 185895
+PREVIEW_IMAGE_ID: int = 862405
 
 GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset"
 
