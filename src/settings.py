@@ -5,7 +5,7 @@ from dataset_tools.templates import AnnotationType, CVTask, Industry, License
 ##################################
 # * Before uploading to instance #
 ##################################
-PROJECT_NAME = "Concrete crack"
+PROJECT_NAME = "Concrete Crack Segmentation"
 PROJECT_NAME_FULL = "Concrete crack Segmentation Dataset"
 
 ##################################
