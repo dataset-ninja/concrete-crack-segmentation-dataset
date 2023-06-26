@@ -1,6 +1,6 @@
-Dataset **Concrete crack** can be downloaded in Supervisely format:
+Dataset **Concrete Crack Segmentation** can be downloaded in Supervisely format:
 
- [Download](https://assets.supervise.ly/supervisely-supervisely-assets-public/teams_storage/h/U/WQ/gAtkOvnGUCKdYO24WSUeQGuevZEkH9q8eWegwZcnCR9ZoDglHtcrTb0jLONttZfP1Cb5xouFzLQXIgV0vP2UuuxHstk2BhithxvrAcBXxyfTJVoPNgPiNlot6Zz5.tar)
+ [Download](https://assets.supervisely.com/supervisely-supervisely-assets-public/teams_storage/N/6/IM/C4MKxrRVPcYUp25FTja8In5HhUAIXz6yPgg8YsXGkhlKO6mve3Dpg9iuMXvzgOzFZd3Tf0HYU6ATGyHtyPTrwP7iPXVJqcC1CY65lY4okxCotE7WJJjXYHbhkZ0v.tar)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
@@ -11,6 +11,6 @@ pip install --upgrade dataset-tools
 ``` python
 import dataset_tools as dtools
 
-dtools.download(dataset='Concrete crack', dst_path='~/dtools/datasets/Concrete crack.tar')
+dtools.download(dataset='Concrete Crack Segmentation', dst_path='~/dtools/datasets/Concrete Crack Segmentation.tar')
 ```
-The data in original format can be 🔗[downloaded here.](https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1)
+The data in original format can be 🔗[downloaded here](https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1)
