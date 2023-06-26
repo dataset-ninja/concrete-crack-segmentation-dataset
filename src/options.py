@@ -4,14 +4,14 @@
 
 # * Literal["ClassesPreview", "HorizontalGrid", "SideAnnotationsGrid"]
 # * If None, then preview_class will be set automatically to "ClassesPreview"
-PREVIEW_CLASS = "HorizontalGrid"
+PREVIEW_CLASS = "Poster"
 
 IS_DETECTION_TASK: bool = False  # ? Set True if you want to visualize only bbox annotations
 
 ###############################################################
 ####### * Set up visualization params for Poster class ########
 POSTER_IS_DETECTION_TASK: bool = IS_DETECTION_TASK
-POSTER_TITLE: str = "Concrete crack"
+POSTER_TITLE: str = None
 ###############################################################
 
 
@@ -34,7 +34,7 @@ VERTICAL_GRID_IS_DETECTION_TASK: bool = IS_DETECTION_TASK
 ###############################################################
 # * Set up visualization params for SideAnnotationsGrid class #
 SIDE_ANNOTATIONS_GRID_ROWS: int = 2
-SIDE_ANNOTATIONS_GRID_COLS: int = 3
+SIDE_ANNOTATIONS_GRID_COLS: int = 4
 SIDE_ANNOTATIONS_GRID_IS_DETECTION_TASK: bool = IS_DETECTION_TASK
 ###############################################################
 
@@ -47,7 +47,9 @@ PREVIEWS_IS_DETECTION_TASK: bool = IS_DETECTION_TASK
 ###############################################################
 ### * Set up visualization params for ClassesPreview class ####
 CLASSES_PREVIEW_ROW_HEIGHT: int = None
-CLASSES_PREVIEW_PADDINGS: dict = None
+CLASSES_PREVIEW_PADDINGS: dict = {"top": "100px", "bottom": "100px", "left": "100px", "right": "100px"}
+CLASSES_PREVIEW_ROWS: int = None
+CLASSES_PREVIEW_GAP: int = 10
 # default {"top": "10%", "bottom": "10%", "left": "10%", "right": "10%"}
 # set % or px as string values (e.i. "10%" or "10px")
 ###############################################################
@@ -111,6 +113,8 @@ def get_stats_options():
         "ClassesPreview": {
             "row_height": CLASSES_PREVIEW_ROW_HEIGHT,
             "pad": CLASSES_PREVIEW_PADDINGS,
+            "rows": CLASSES_PREVIEW_ROWS,
+            "gap": CLASSES_PREVIEW_GAP,
         },
         "ClassesHeatmaps": {
             "draw_style": DRAW_STYLE,
