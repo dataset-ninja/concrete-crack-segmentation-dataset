@@ -81,7 +81,6 @@ def convert_and_upload_supervisely_project(
         ann_np = sly.imaging.image.read(mask_path)[:, :, 2]
         img_height = ann_np.shape[0]
         img_wight = ann_np.shape[1]
-        ann_np = np.where(ann_np > 0, 255, 0)
         mask = ann_np != 0
         bitmap = sly.Bitmap(mask)
         label = sly.Label(bitmap, obj_class)
