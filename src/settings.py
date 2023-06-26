@@ -13,7 +13,7 @@ PROJECT_NAME_FULL = "Concrete crack Segmentation Dataset"
 ##################################
 LICENSE: License = License.CC_BY_SA_4_0()
 INDUSTRIES: List[Industry] = [Industry.Industrial()]
-CV_TASKS: List[CVTask] = [CVTask.SemanticSegmentation(), CVTask.InstanceSegmentation()]
+CV_TASKS: List[CVTask] = [CVTask.SemanticSegmentation()]
 ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.SemanticSegmentation()]
 
 RELEASE_YEAR: int = 2022
