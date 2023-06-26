@@ -75,26 +75,19 @@ def convert_and_upload_supervisely_project(
     images_names = os.listdir(images_pathes)
 
     def _create_ann(image_path):
-        labels = []
-
-        image_np = sly.imaging.image.read(image_path)[:, :, 0]
-        img_height = image_np.shape[0]
-        img_wight = image_np.shape[1]
 
         image_name = get_file_name(image_path)
         mask_path = os.path.join(masks_pathes, image_name + ".jpg")
         ann_np = sly.imaging.image.read(mask_path)[:, :, 2]
+        img_height = ann_np.shape[0]
+        img_wight = ann_np.shape[1]
         ann_np = np.where(ann_np > 0, 255, 0)
         mask = ann_np != 0
-        ret, curr_mask = connectedComponents(mask.astype("uint8"), connectivity=8)
-        for _ in range(1, ret):
-            obj_mask = curr_mask > 0
-            curr_bitmap = sly.Bitmap(obj_mask)
-            if curr_bitmap.area > 100:
-                curr_label = sly.Label(curr_bitmap, obj_class)
-                labels.append(curr_label)
+        bitmap = sly.Bitmap(mask)
+        label = sly.Label(bitmap, obj_class)
 
-        return sly.Annotation(img_size=(img_height, img_wight), labels=labels)
+        return sly.Annotation(img_size=(img_height, img_wight), labels=[label])
+
 
     progress = tqdm(desc=f"Create dataset {ds_name}", total=len(images_names))
 
