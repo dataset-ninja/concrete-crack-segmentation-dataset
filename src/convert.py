@@ -57,6 +57,8 @@ def convert_and_upload_supervisely_project(
     remote_dataset_path = "/4import/concreteCrackSegmentationDataset/"
     data_dir = sly.app.get_data_dir()
     dataset_path = os.path.join(data_dir, remote_dataset_path)
+    if os.path.exists(dataset_path):
+        sly.fs.clean_dir(dataset_path)
     api.file.download_directory(sly.env.team_id(), remote_dataset_path, dataset_path)
     ds_name = "ds"
     batch_size = 3  # 4032x3024 images shapes...
