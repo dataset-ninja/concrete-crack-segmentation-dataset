@@ -5,6 +5,7 @@ from urllib.parse import unquote, urlparse
 
 from cv2 import connectedComponents
 from tqdm import tqdm
+import numpy as np
 
 import src.settings as s
 import supervisely as sly
@@ -83,6 +84,7 @@ def convert_and_upload_supervisely_project(
         image_name = get_file_name(image_path)
         mask_path = os.path.join(masks_pathes, image_name + ".jpg")
         ann_np = sly.imaging.image.read(mask_path)[:, :, 2]
+        ann_np = np.where(ann_np > 0, 255, 0)
         mask = ann_np != 0
         ret, curr_mask = connectedComponents(mask.astype("uint8"), connectivity=8)
         for _ in range(1, ret):
