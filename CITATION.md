@@ -1,11 +1,11 @@
-If you make use of the Concrete crack data, please cite the following reference:
+If you make use of the Concrete Crack Segmentation data, please cite the following reference:
 
 ``` bibtex 
-@misc{Concrete crack,
-	author = "user motono0223",
-	title = "Concrete crack Segmentation Dataset",
-	year = {2022},
-	url = "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset"
+@dataset{Concrete Crack Segmentation,
+	author={motono0223},
+	title={Concrete Crack Segmentation Dataset},
+	year={2021},
+	url={https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset}
 }
 ```
 
