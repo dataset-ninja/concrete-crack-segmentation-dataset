@@ -1,3 +1,3 @@
-# Concrete crack Segmentation Dataset
+# Concrete Crack Segmentation Dataset
 
-Concrete Crack Segmentation is a dataset for semantic segmentation, instance segmentation tasks.
+Concrete Crack Segmentation is a dataset for instance segmentation, semantic segmentation, object detection tasks.
