@@ -1,6 +1,6 @@
-Dataset **Concrete Crack Segmentation** can be downloaded in Supervisely format:
+Dataset **Concrete Crack Segmentation** can be downloaded in [Supervisely format](https://developer.supervisely.com/api-references/supervisely-annotation-json-format):
 
- [Download](https://assets.supervisely.com/supervisely-supervisely-assets-public/teams_storage/N/6/IM/C4MKxrRVPcYUp25FTja8In5HhUAIXz6yPgg8YsXGkhlKO6mve3Dpg9iuMXvzgOzFZd3Tf0HYU6ATGyHtyPTrwP7iPXVJqcC1CY65lY4okxCotE7WJJjXYHbhkZ0v.tar)
+ [Download](Set 'HIDE_DATASET=False' to generate download link)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
@@ -11,6 +11,8 @@ pip install --upgrade dataset-tools
 ``` python
 import dataset_tools as dtools
 
-dtools.download(dataset='Concrete Crack Segmentation', dst_path='~/dtools/datasets/Concrete Crack Segmentation.tar')
+dtools.download(dataset='Concrete Crack Segmentation', dst_dir='~/dataset-ninja/')
 ```
-The data in original format can be 🔗[downloaded here](https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1)
+Make sure not to overlook the [python code example](https://developer.supervisely.com/getting-started/python-sdk-tutorials/iterate-over-a-local-project) available on the Supervisely Developer Portal. It will give you a clear idea of how to effortlessly work with the downloaded dataset.
+
+The data in original format can be [downloaded here](https://prod-dcd-datasets-cache-zipfiles.s3.eu-west-1.amazonaws.com/jwsn7tfbrp-1.zip).
