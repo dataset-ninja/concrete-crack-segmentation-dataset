@@ -1,0 +1,1 @@
+The **Concrete Crack Segmentation Dataset** dataset includes 458 hi-res images together with their alpha maps (BW) indicating the crack presence. The ground truth for semantic segmentation has two classes to conduct binary pixelwise classification. The photos are captured in various buildings located in Middle East Technical University.

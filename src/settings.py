@@ -15,23 +15,28 @@ from dataset_tools.templates import (
 ##################################
 PROJECT_NAME = "Concrete Crack Segmentation"
 PROJECT_NAME_FULL = "Concrete Crack Segmentation Dataset"
+HIDE_DATASET = True  # set False when 100% sure about repo quality
 
 ##################################
 # * After uploading to instance ##
 ##################################
-LICENSE: License = License.CC_BY_SA_4_0()
-APPLICATIONS: List[Union[Industry, Domain, Research]] = [Industry.Utilities(is_used=False)]
-CATEGORY: Category = Category.EnergyAndUtilities()
+LICENSE: License = License.CC_BY_4_0()
+APPLICATIONS: List[Union[Industry, Domain, Research]] = [Industry.Construction(is_used=False)]
+CATEGORY: Category = Category.Construction(is_original_dataset=False)
 
-CV_TASKS: List[CVTask] = [CVTask.SemanticSegmentation(), CVTask.ObjectDetection()]
-ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.SemanticSegmentation()]
+CV_TASKS: List[CVTask] = [
+    CVTask.InstanceSegmentation(),
+    CVTask.SemanticSegmentation(),
+    CVTask.ObjectDetection(),
+]
+ANNOTATION_TYPES: List[AnnotationType] = [AnnotationType.InstanceSegmentation()]
 
-RELEASE_DATE: Optional[str] = None  # e.g. "YYYY-MM-DD"
+RELEASE_DATE: Optional[str] = "2019-04-03"  # e.g. "YYYY-MM-DD"
 if RELEASE_DATE is None:
-    RELEASE_YEAR: int = 2021
-HOMEPAGE_URL: str = "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset"
+    RELEASE_YEAR: int = None
+HOMEPAGE_URL: str = "https://data.mendeley.com/datasets/jwsn7tfbrp/1"
 
-PREVIEW_IMAGE_ID: int = 862405
+PREVIEW_IMAGE_ID: int = None
 
 GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset"
 
@@ -40,18 +45,18 @@ GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-
 ##################################
 DOWNLOAD_ORIGINAL_URL: Optional[
     Union[str, dict]
-] = "https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset/download?datasetVersionNumber=1"
+] = "https://prod-dcd-datasets-cache-zipfiles.s3.eu-west-1.amazonaws.com/jwsn7tfbrp-1.zip"
 
 CLASS2COLOR: Optional[Dict[str, List[str]]] = None
 # If specific colors for classes are needed, fill this dict (e.g. {"class1": [255, 0, 0], "class2": [0, 255, 0]})
 
 PAPER: Optional[str] = None
-CITATION_URL: Optional[str] = None
-AUTHORS: Optional[List[str]] = ["motono0223"]
+CITATION_URL: Optional[str] = "https://data.mendeley.com/datasets/jwsn7tfbrp/1"
+AUTHORS: Optional[List[str]] = ["Çağlar Fırat Özgenel"]
 
 
-ORGANIZATION_NAME: Optional[Union[str, List[str]]] = None
-ORGANIZATION_URL: Optional[Union[str, List[str]]] = None
+ORGANIZATION_NAME: Optional[Union[str, List[str]]] = "Orta Dogu Teknik Universitesi"
+ORGANIZATION_URL: Optional[Union[str, List[str]]] = "https://www.metu.edu.tr/tr"
 SLYTAGSPLIT: Optional[Dict[str, List[str]]] = None
 TAGS: List[str] = None
 

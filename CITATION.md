@@ -1,12 +1,10 @@
 If you make use of the Concrete Crack Segmentation data, please cite the following reference:
 
-``` bibtex 
-@dataset{Concrete Crack Segmentation,
-	author={motono0223},
-	title={Concrete Crack Segmentation Dataset},
-	year={2021},
-	url={https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset}
-}
+```apa
+Özgenel, Çağlar Fırat (2019), 
+“Concrete Crack Segmentation Dataset”, 
+Mendeley Data, V1, 
+doi: 10.17632/jwsn7tfbrp.1
 ```
 
-[🔗 Source](https://www.kaggle.com/datasets/motono0223/concrete-crack-segmentation-dataset)
+[Source](https://data.mendeley.com/datasets/jwsn7tfbrp/1)

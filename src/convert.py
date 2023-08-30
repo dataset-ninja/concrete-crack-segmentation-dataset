@@ -3,14 +3,14 @@
 import os
 from urllib.parse import unquote, urlparse
 
-from cv2 import connectedComponents
-from tqdm import tqdm
 import numpy as np
+import supervisely as sly
+from cv2 import connectedComponents
+from supervisely.io.fs import get_file_name
+from tqdm import tqdm
 
 import src.settings as s
-import supervisely as sly
 from dataset_tools.convert import unpack_if_archive
-from supervisely.io.fs import get_file_name
 
 
 def download_dataset(teamfiles_dir: str) -> str:
@@ -54,37 +54,21 @@ def download_dataset(teamfiles_dir: str) -> str:
 def convert_and_upload_supervisely_project(
     api: sly.Api, workspace_id: int, project_name: str
 ) -> sly.ProjectInfo:
-    remote_dataset_path = "/4import/concreteCrackSegmentationDataset/"
-    data_dir = sly.app.get_data_dir()
-    dataset_path = os.path.join(data_dir, remote_dataset_path)
-    if os.path.exists(dataset_path):
-        sly.fs.clean_dir(dataset_path)
-    api.file.download_directory(sly.env.team_id(), remote_dataset_path, dataset_path)
+    dataset_path = "APP_DATA/concreteCrackSegmentationDataset"
     ds_name = "ds"
     batch_size = 3  # 4032x3024 images shapes...
 
-    obj_class = sly.ObjClass("crack", sly.Bitmap, color=[16, 138, 15])
-    obj_class_collection = sly.ObjClassCollection([obj_class])
-
-    project_info = api.project.create(workspace_id, project_name)
-    meta = sly.ProjectMeta(obj_classes=obj_class_collection)
-    api.project.update_meta(project_info.id, meta.to_json())
-
-    dataset = api.dataset.create(project_info.id, ds_name)
-
-    images_pathes = os.path.join(dataset_path, "rgb")
-    masks_pathes = os.path.join(dataset_path, "BW")
-    images_names = os.listdir(images_pathes)
-
-    def _create_ann(image_path):
+    def create_ann(image_path):
         labels = []
+
+        image_np = sly.imaging.image.read(image_path)[:, :, 0]
+        img_height = image_np.shape[0]
+        img_wight = image_np.shape[1]
 
         image_name = get_file_name(image_path)
         mask_path = os.path.join(masks_pathes, image_name + ".jpg")
         ann_np = sly.imaging.image.read(mask_path)[:, :, 2]
-        img_height = ann_np.shape[0]
-        img_wight = ann_np.shape[1]
-        mask = ann_np > 200
+        mask = ann_np != 0
         ret, curr_mask = connectedComponents(mask.astype("uint8"), connectivity=8)
         for i in range(1, ret):
             obj_mask = curr_mask == i
@@ -95,21 +79,33 @@ def convert_and_upload_supervisely_project(
 
         return sly.Annotation(img_size=(img_height, img_wight), labels=labels)
 
+    obj_class = sly.ObjClass("crack", sly.Bitmap)
+    obj_class_collection = sly.ObjClassCollection([obj_class])
 
-    progress = tqdm(desc=f"Create dataset {ds_name}", total=len(images_names))
+    project = api.project.create(workspace_id, project_name, change_name_if_conflict=True)
+    meta = sly.ProjectMeta(obj_classes=obj_class_collection)
+    api.project.update_meta(project.id, meta.to_json())
+
+    dataset = api.dataset.create(project.id, ds_name, change_name_if_conflict=True)
+
+    images_pathes = os.path.join(dataset_path, "rgb")
+    masks_pathes = os.path.join(dataset_path, "BW")
+    images_names = os.listdir(images_pathes)
+
+    progress = sly.Progress("Create dataset {}".format(ds_name), len(images_names))
 
     for img_names_batch in sly.batched(images_names, batch_size=batch_size):
         images_pathes_batch = [
             os.path.join(images_pathes, image_path) for image_path in img_names_batch
         ]
 
-        anns_batch = [_create_ann(image_path) for image_path in images_pathes_batch]
+        anns_batch = [create_ann(image_path) for image_path in images_pathes_batch]
 
         img_infos = api.image.upload_paths(dataset.id, img_names_batch, images_pathes_batch)
         img_ids = [im_info.id for im_info in img_infos]
 
         api.annotation.upload_anns(img_ids, anns_batch)
 
-        progress.update(len(img_names_batch))
+        progress.iters_done_report(len(img_names_batch))
 
-    return project_info
+    return project
