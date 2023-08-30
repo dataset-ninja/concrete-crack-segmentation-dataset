@@ -36,7 +36,7 @@ if RELEASE_DATE is None:
     RELEASE_YEAR: int = None
 HOMEPAGE_URL: str = "https://data.mendeley.com/datasets/jwsn7tfbrp/1"
 
-PREVIEW_IMAGE_ID: int = None
+PREVIEW_IMAGE_ID: int = 2597639
 
 GITHUB_URL: str = "https://github.com/dataset-ninja/concrete-crack-segmentation-dataset"
 
