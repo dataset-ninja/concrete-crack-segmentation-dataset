@@ -1,6 +1,6 @@
 Dataset **Concrete Crack Segmentation** can be downloaded in [Supervisely format](https://developer.supervisely.com/api-references/supervisely-annotation-json-format):
 
- [Download](https://assets.supervisely.com/supervisely-supervisely-assets-public/teams_storage/a/M/N5/mb3c4BEQrUqt1vLoPjDmL5o8pFJqMrkUtkhdQJCy6gWyJTssfsh7nrtd5kAQI5Th3n7JFGazWyihgAlxCu2iKWT2FJic65UA6ufFob8U7qXFMeKpZq2dcwCQXHNB.tar)
+ [Download](https://www.dropbox.com/scl/fi/w128s2s31pdz87zoux5ky/concrete-crack-segmentation-DatasetNinja.tar?rlkey=wbt1eyt5u9bkmvam2ian3p374&dl=1)
 
 As an alternative, it can be downloaded with *dataset-tools* package:
 ``` bash
